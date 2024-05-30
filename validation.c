@@ -1,15 +1,16 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "validation.h"
-#include "validationUtils.h"
-#include "utils.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "globals.h"
+#include "utils.h"
 
 boolean isLineValid(const char line[]) {
     char *lineCopy;
     char *token;
     boolean isValid;
-    
+
     lineCopy = duplicateString(line);
     token = tokenizeLine(lineCopy);
 
@@ -27,7 +28,7 @@ boolean isLineValid(const char line[]) {
         case READ_SET:
             isValid = handleReadSet();
             break;
-        case -1:
+        case INVALID_INDEX:
             fprintf(stderr, "Error: Invalid operation.\n");
             isValid = FALSE;
             break;
@@ -135,7 +136,7 @@ boolean handleSetOperation() {
         }
 
         removeComma(token);
-        
+
         if (getSetIndex(token) == INVALID_INDEX) {
             fprintf(stderr, "Error: Invalid set name.\n");
             return FALSE;

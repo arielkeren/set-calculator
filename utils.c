@@ -1,8 +1,10 @@
+#include "utils.h"
+
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include "utils.h"
+
 #include "globals.h"
 
 char *getNextToken() {
@@ -21,8 +23,8 @@ int getSetIndex(const char string[]) {
     return indexOf(SETS, string, NUMBER_OF_SETS);
 }
 
-int indexOf(const char *words[], const char word[], size_t length) {
-    size_t index;
+int indexOf(const char *words[], const char word[], int length) {
+    int index;
 
     for (index = FIRST_INDEX; index < length; index++) {
         if (!strcmp(words[index], word)) {
@@ -74,23 +76,11 @@ boolean isInteger(const char string[]) {
     return TRUE;
 }
 
-setptr getMatchingSet(char string[], setptr *setA, setptr *setB, setptr *setC, setptr *setD, setptr *setE, setptr *setF) {
+setptr getMatchingSet(char string[], setptr sets[]) {
+    int index;
+
     removeComma(string);
+    index = getSetIndex(string);
 
-    switch (getSetIndex(string)) {
-        case SETA_INDEX:
-            return *setA;
-        case SETB_INDEX:
-            return *setB;
-        case SETC_INDEX:
-            return *setC;
-        case SETD_INDEX:
-            return *setD;
-        case SETE_INDEX:
-            return *setE;
-        case SETF_INDEX:
-            return *setF;
-    }
-
-    return NULL;
+    return index == INVALID_INDEX ? NULL : sets[index];
 }

@@ -1,5 +1,7 @@
 #include "set.h"
 
+#include <stdio.h>
+
 #include "globals.h"
 #include "setUtils.h"
 

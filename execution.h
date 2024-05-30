@@ -3,9 +3,9 @@
 
 #include "globals.h"
 
-boolean executeLine(char line[], set setA, set setB, set setC, set setD, set setE, set setF);
-void executePrintSet(char line[], set setA, set setB, set setC, set setD, set setE, set setF);
-void executeReadSet(char line[], set setA, set setB, set setC, set setD, set setE, set setF);
-void executeSetOperation(char line[], set setA, set setB, set setC, set setD, set setE, set setF);
+boolean executeLine(char line[], setptr sets[]);
+void executePrintSet(char line[], setptr sets[]);
+void executeReadSet(char line[], setptr sets[]);
+void executeSetOperation(char line[], setptr sets[]);
 
 #endif

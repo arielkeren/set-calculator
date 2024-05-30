@@ -1,8 +1,11 @@
-myset: myset.o utils.o set.o setUtils.o validation.o execution.o globals.o
-	gcc -ansi -Wall -pedantic -o myset myset.o utils.o set.o setUtils.o validation.o execution.o globals.o
+myset: myset.o mysetUtils.o utils.o set.o setUtils.o validation.o execution.o globals.o
+	gcc -ansi -Wall -pedantic -o myset myset.o mysetUtils.o utils.o set.o setUtils.o validation.o execution.o globals.o
 
-myset.o: myset.c validation.h execution.h globals.h
+myset.o: myset.c mysetUtils.h globals.h
 	gcc -c -ansi -Wall -pedantic -o myset.o myset.c
+
+mysetUtils.o: mysetUtils.c mysetUtils.h validation.h execution.h globals.h
+	gcc -c -ansi -Wall -pedantic -o mysetUtils.o mysetUtils.c
 
 utils.o: utils.c utils.h globals.h
 	gcc -c -ansi -Wall -pedantic -o utils.o utils.c

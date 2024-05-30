@@ -4,8 +4,6 @@
 #include "globals.h"
 
 boolean isSetEmpty(const set setA);
-char *setToString(const set setA);
-size_t getSetStringLength(const set setA);
-void fillSetString(const set setA, char string[]);
+void printSetAsString(const set setA);
 
 #endif

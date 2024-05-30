@@ -23,10 +23,8 @@
 #define SINGLE_BIT 1
 #define NULL_BYTE 1
 #define STARTING_VALUE 0
-#define COMMA_SPACE 2
 #define NUMBERS_PER_LINE 16
 #define NO_REMAINDER 0
-#define NEWLINE 1
 #define NUMBER_OF_OPERATIONS 7
 #define NUMBER_OF_SETS 6
 #define INVALID_INDEX (-1)
@@ -60,7 +58,10 @@ enum { SETA_INDEX,
        SETF_INDEX };
 enum { FIRST_INDEX,
        SECOND_INDEX,
-       THIRD_INDEX };
+       THIRD_INDEX,
+       FOURTH_INDEX,
+       FIFTH_INDEX,
+       SIXTH_INDEX };
 enum { SINGLE_DIGIT = 1,
        DOUBLE_DIGIT,
        TRIPLE_DIGIT };

@@ -2,52 +2,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "execution.h"
 #include "globals.h"
-
-/**
- * Prints an explanation of the program.
- * Prints every valid command with its operands.
- */
-void printExplanation() {
-    /* Explanation. */
-    printf("Welcome! This program is a set calculator.\n");
-
-    /* Valid commands. */
-    printf("These are the possible commands:\n");
-    printf("\nread_set <set>, <number>, <number>, ..., -1 --- Fills the set with the given numbers.\n");
-    printf("print_set <set> --- Prints the set.\n");
-    printf("union_set <set>, <set>, <set> --- Sets the third set to the union of the first two sets.\n");
-    printf("intersect_set <set>, <set>, <set> --- Sets the third set to the intersection of the first two sets.\n");
-    printf("sub_set <set>, <set>, <set> --- Sets the third set to the difference of the first two sets.\n");
-    printf("symdiff_set <set>, <set>, <set> --- Sets the third set to the symmetric difference of the first two sets.\n");
-    printf("stop --- Ends the program.\n");
-
-    /* Valid operands. */
-    printf("\nIn all commands:\n");
-    printf("\n<set> is one of SETA, SETB, SETC, SETD, SETE, SETF.\n");
-    printf("<number> is an integer in the range 0-127.\n");
-}
-
-/**
- * Resets all the sets in the given set array.
- * Sets every section of every set to 0.
- *
- * @param sets An array of sets.
- */
-void resetSets(set sets[]) {
-    size_t index;             /* Current index in the set array. */
-    setindex currentSetIndex; /* Current index of the set. */
-
-    /* Loop over each set. */
-    for (index = FIRST_INDEX; index < NUMBER_OF_SETS; index++) {
-        /* Loop over each section of the set. */
-        for (currentSetIndex = FIRST_INDEX; currentSetIndex < SET_SIZE; currentSetIndex++) {
-            /* Reset the current section. */
-            sets[index][currentSetIndex] = EMPTY;
-        }
-    }
-}
+#include "validation.h"
 
 /**
  * Runs the program.
@@ -58,7 +17,7 @@ void resetSets(set sets[]) {
  *
  * @param sets An array of sets.
  */
-void readInput(set sets[]) {
+void readInput(setptr sets[]) {
     boolean isStopped; /* Is the program stopped? */
     char *line;        /* Current line as input from the user. */
 
@@ -87,6 +46,59 @@ void readInput(set sets[]) {
 
         /* The input is no longer used. */
         free(line);
+    }
+}
+
+/**
+ * Prints an explanation of the program.
+ * Prints every valid command with its operands.
+ */
+void printExplanation() {
+    /* Explanation. */
+    printf("Welcome! This program is a set calculator.\n");
+
+    /* Valid commands. */
+    printf("These are the possible commands:\n");
+    printf("\nread_set <set>, <number>, <number>, ..., -1 --- Fills the set with the given numbers.\n");
+    printf("print_set <set> --- Prints the set.\n");
+    printf("union_set <set>, <set>, <set> --- Sets the third set to the union of the first two sets.\n");
+    printf("intersect_set <set>, <set>, <set> --- Sets the third set to the intersection of the first two sets.\n");
+    printf("sub_set <set>, <set>, <set> --- Sets the third set to the difference of the first two sets.\n");
+    printf("symdiff_set <set>, <set>, <set> --- Sets the third set to the symmetric difference of the first two sets.\n");
+    printf("stop --- Ends the program.\n");
+
+    /* Valid operands. */
+    printf("\nIn all commands:\n");
+    printf("\n<set> is one of SETA, SETB, SETC, SETD, SETE, SETF.\n");
+    printf("<number> is an integer in the range 0-127.\n");
+}
+
+void initializeSets(setptr sets[], set setA, set setB, set setC, set setD, set setE, set setF) {
+    sets[FIRST_INDEX] = setA;
+    sets[SECOND_INDEX] = setB;
+    sets[THIRD_INDEX] = setC;
+    sets[FOURTH_INDEX] = setD;
+    sets[FIFTH_INDEX] = setE;
+    sets[SIXTH_INDEX] = setF;
+}
+
+/**
+ * Resets all the sets in the given set array.
+ * Sets every section of every set to 0.
+ *
+ * @param sets An array of sets.
+ */
+void resetSets(setptr sets[]) {
+    size_t index;             /* Current index in the set array. */
+    setindex currentSetIndex; /* Current index of the set. */
+
+    /* Loop over each set. */
+    for (index = FIRST_INDEX; index < NUMBER_OF_SETS; index++) {
+        /* Loop over each section of the set. */
+        for (currentSetIndex = FIRST_INDEX; currentSetIndex < SET_SIZE; currentSetIndex++) {
+            /* Reset the current section. */
+            sets[index][currentSetIndex] = EMPTY;
+        }
     }
 }
 

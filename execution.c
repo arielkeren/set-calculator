@@ -1,11 +1,13 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "execution.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "globals.h"
 #include "set.h"
 #include "utils.h"
-#include "globals.h"
 
-boolean executeLine(char line[], set setA, set setB, set setC, set setD, set setE, set setF) {
+boolean executeLine(char line[], setptr sets[]) {
     boolean isStopped;
     char *lineCopy;
 
@@ -17,13 +19,13 @@ boolean executeLine(char line[], set setA, set setB, set setC, set setD, set set
             isStopped = TRUE;
             break;
         case PRINT_SET:
-            executePrintSet(line, setA, setB, setC, setD, setE, setF);
+            executePrintSet(line, sets);
             break;
         case READ_SET:
-            executeReadSet(line, setA, setB, setC, setD, setE, setF);
+            executeReadSet(line, sets);
             break;
         default:
-            executeSetOperation(line, setA, setB, setC, setD, setE, setF);
+            executeSetOperation(line, sets);
             break;
     }
 
@@ -31,20 +33,17 @@ boolean executeLine(char line[], set setA, set setB, set setC, set setD, set set
     return isStopped;
 }
 
-void executePrintSet(char line[], set setA, set setB, set setC, set setD, set setE, set setF) {
-    char *setString;
+void executePrintSet(char line[], setptr sets[]) {
     char *lineCopy;
 
     lineCopy = duplicateString(line);
     tokenizeLine(lineCopy);
-    setString = print_set(getMatchingSet(getNextToken(), &setA, &setB, &setC, &setD, &setE, &setF));
-    printf("%s\n", setString);
+    print_set(getMatchingSet(getNextToken(), sets));
 
-    free(setString);
     free(lineCopy);
 }
 
-void executeReadSet(char line[], set setA, set setB, set setC, set setD, set setE, set setF) {
+void executeReadSet(char line[], setptr sets[]) {
     operand *numbers;
     size_t length;
     size_t index;
@@ -54,7 +53,7 @@ void executeReadSet(char line[], set setA, set setB, set setC, set setD, set set
 
     lineCopy = duplicateString(line);
     tokenizeLine(lineCopy);
-    setToFill = getMatchingSet(getNextToken(), &setA, &setB, &setC, &setD, &setE, &setF);
+    setToFill = getMatchingSet(getNextToken(), sets);
 
     while (getNextToken()) {
         length++;
@@ -83,33 +82,33 @@ void executeReadSet(char line[], set setA, set setB, set setC, set setD, set set
     free(numbers);
 }
 
-void executeSetOperation(char line[], set setA, set setB, set setC, set setD, set setE, set setF) {
+void executeSetOperation(char line[], setptr sets[]) {
     int operationIndex;
     int index;
     char *lineCopy;
-    setptr sets[SET_OPERATION_OPERANDS];
+    setptr targetSets[SET_OPERATION_OPERANDS];
 
     lineCopy = duplicateString(line);
     operationIndex = getOperationIndex(tokenizeLine(lineCopy));
 
     for (index = FIRST_INDEX; index < SET_OPERATION_OPERANDS; index++) {
-        sets[index] = getMatchingSet(getNextToken(), &setA, &setB, &setC, &setD, &setE, &setF);
+        targetSets[index] = getMatchingSet(getNextToken(), sets);
     }
 
     free(lineCopy);
 
     switch (operationIndex) {
         case UNION_SET:
-            union_set(sets[FIRST_INDEX], sets[SECOND_INDEX], sets[THIRD_INDEX]);
+            union_set(targetSets[FIRST_INDEX], targetSets[SECOND_INDEX], targetSets[THIRD_INDEX]);
             break;
         case INTERSECT_SET:
-            intersect_set(sets[FIRST_INDEX], sets[SECOND_INDEX], sets[THIRD_INDEX]);
+            intersect_set(targetSets[FIRST_INDEX], targetSets[SECOND_INDEX], targetSets[THIRD_INDEX]);
             break;
         case SUB_SET:
-            sub_set(sets[FIRST_INDEX], sets[SECOND_INDEX], sets[THIRD_INDEX]);
+            sub_set(targetSets[FIRST_INDEX], targetSets[SECOND_INDEX], targetSets[THIRD_INDEX]);
             break;
         case SYMDIFF_SET:
-            symdiff_set(sets[FIRST_INDEX], sets[SECOND_INDEX], sets[THIRD_INDEX]);
+            symdiff_set(targetSets[FIRST_INDEX], targetSets[SECOND_INDEX], targetSets[THIRD_INDEX]);
             break;
     }
 }

@@ -12,7 +12,9 @@ int main() {
     /* The 6 sets used in the program. */
     set SETA, SETB, SETC, SETD, SETE, SETF;
     /* An array containing all the sets, so they can be passed more easily to functions. */
-    set sets[] = {SETA, SETB, SETC, SETD, SETE, SETF};
+    setptr sets[NUMBER_OF_SETS];
+
+    initializeSets(sets, SETA, SETB, SETC, SETD, SETE, SETF);
 
     /* Reset all the sets. */
     resetSets(sets);
