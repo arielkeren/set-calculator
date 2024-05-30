@@ -32,21 +32,21 @@ void read_set(set setA, const operand numbers[]) {
 }
 
 /**
- * Converts and returns the given set's string representation.
- * If the set is empty, returns "The set is empty."
- * Otherwise, returns a string containing each element in the set.
+ * Converts and prints the given set's string representation.
+ * If the set is empty, prints "The set is empty."
+ * Otherwise, prints a string containing each element in the set.
  *
- * @param setA The set to convert.
- * @return The set's string representation.
+ * @param setA The set to print.
  */
-char *print_set(const set setA) {
+void print_set(const set setA) {
     /* Check if the set is empty. */
     if (isSetEmpty(setA)) {
-        return "The set is empty.";
+        printf("The set is empty.");
+        return;
     }
 
-    /* Otherwise, build the set's string representation and return it. */
-    return setToString(setA);
+    /* Print the set's string representation. */
+    printSetAsString(setA);
 }
 
 /**
