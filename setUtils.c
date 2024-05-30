@@ -44,6 +44,9 @@ void printSetAsString(const set setA) {
     numbersFound = STARTING_VALUE;
     currentNumber = STARTING_VALUE;
 
+    /* Print the opening curly brace of the set. */
+    printf("{");
+
     /* Loop over all sections in the set. */
     for (index = FIRST_INDEX; index < SET_SIZE; index++) {
         /* Loop over all possible numbers in each section. */
@@ -73,6 +76,9 @@ void printSetAsString(const set setA) {
             }
         }
     }
+
+    /* Print the closing curly brace of the set. */
+    printf("}");
 
     /* Print an extra newline character when necessary. */
     if (numbersFound % NUMBERS_PER_LINE != NO_REMAINDER) {

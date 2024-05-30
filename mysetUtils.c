@@ -25,7 +25,7 @@ void readInput(setptr sets[]) {
 
     /* Loop until the program is stopped. */
     while (!isStopped) {
-        printf("\nPlease enter a command:\n");
+        printf("Please enter a command:\n");
 
         /* Read the command from the user. */
         line = readLine();
@@ -47,6 +47,8 @@ void readInput(setptr sets[]) {
         /* The input is no longer used. */
         free(line);
     }
+
+    printf("Goodbye!\n");
 }
 
 /**
@@ -70,7 +72,7 @@ void printExplanation() {
     /* Valid operands. */
     printf("\nIn all commands:\n");
     printf("\n<set> is one of SETA, SETB, SETC, SETD, SETE, SETF.\n");
-    printf("<number> is an integer in the range 0-127.\n");
+    printf("<number> is an integer in the range 0-127.\n\n");
 }
 
 void initializeSets(setptr sets[], set setA, set setB, set setC, set setD, set setE, set setF) {
