@@ -43,7 +43,7 @@ void read_set(set setA, const operand numbers[]) {
 void print_set(const set setA) {
     /* Check if the set is empty. */
     if (isSetEmpty(setA)) {
-        printf("The set is empty.");
+        printf("The set is empty.\n");
         return;
     }
 
