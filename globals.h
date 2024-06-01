@@ -15,33 +15,41 @@
 #define STARTING_LINE_LENGTH 256
 #define LINE_EXPANSION_FACTOR 2
 
-#define SIZE_MAX (size_t)(-1)
-#define EMPTY 0
+#define SINGLE_TOKEN 1
+#define TOKENS_COMMAS_DIFFERENCE 2
+
 #define SET_SIZE 16
-#define TERMINATOR (-1)
-#define BITS_PER_BYTE 8
-#define SINGLE_BIT 1
-#define NULL_BYTE 1
-#define STARTING_VALUE 0
-#define NUMBERS_PER_LINE 16
-#define NO_REMAINDER 0
 #define NUMBER_OF_OPERATIONS 7
 #define NUMBER_OF_SETS 6
+#define SET_OPERATION_OPERANDS 3
+#define NUMBERS_PER_LINE 16
+
+#define SINGLE_BIT 1
+#define BITS_PER_BYTE 8
+#define NULL_BYTE 1
+
 #define INVALID_INDEX (-1)
 #define LAST_INDEX_DIFFERENCE 1
-#define SET_OPERATION_OPERANDS 3
+
+#define SIZE_MAX (size_t)(-1)
+
+#define EMPTY 0
+#define STARTING_VALUE 0
+#define NO_REMAINDER 0
+#define TERMINATOR (-1)
 
 typedef unsigned char setsection;
 typedef setsection set[SET_SIZE];
 typedef setsection *setptr;
 typedef unsigned char setindex;
 typedef signed char operand;
+
 typedef enum { FALSE,
                TRUE } boolean;
 
 extern const char *OPERATIONS[];
 extern const char *SETS[];
-extern const char WHITESPACE[];
+extern const char SEPARATORS[];
 
 enum { READ_SET,
        PRINT_SET,

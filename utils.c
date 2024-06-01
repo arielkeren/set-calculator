@@ -9,26 +9,26 @@
 
 /**
  * Returns the next token from the last tokenized string.
- * The tokens are separated by whitespace in the original string.
+ * The tokens are separated by whitespace characters and commas in the original string.
  *
  * @return The next token from the last tokenized string.
  */
 char *getNextToken() {
     /* strtok remembers the last tokenized string, so use it to get the next token. */
-    return strtok(NULL, WHITESPACE);
+    return strtok(NULL, SEPARATORS);
 }
 
 /**
  * Tokenizes a string and returns the first token.
- * The tokens are separated by whitespace in the original string.
+ * The tokens are separated by whitespace characters and commas in the original string.
  * Assumes the string is null-terminated.
  *
  * @param line The line to tokenize.
  * @return The first token from the line.
  */
 char *tokenizeLine(char line[]) {
-    /* Use strtok to tokenize the given string by whitespace characters. */
-    return strtok(line, WHITESPACE);
+    /* Use strtok to tokenize the given string by whitespace characters and commas. */
+    return strtok(line, SEPARATORS);
 }
 
 /**
@@ -110,32 +110,6 @@ char *duplicateString(const char string[]) {
 }
 
 /**
- * Removes a comma from the end of the given string if it exists.
- * Assumes the string is null-terminated.
- *
- * @param string The string to remove the comma from.
- */
-void removeComma(char string[]) {
-    /* Check for a comma at the end of the string. */
-    if (doesEndWithComma(string)) {
-        /* If there is one, remove it by replacing it with a null character. */
-        string[strlen(string) - LAST_INDEX_DIFFERENCE] = '\0';
-    }
-}
-
-/**
- * Checks if the given string ends with a comma.
- * Assumes the string is null-terminated.
- *
- * @param string The string to check.
- * @return TRUE if the string ends with a comma, FALSE otherwise.
- */
-boolean doesEndWithComma(const char string[]) {
-    /* Check the last character in the string. */
-    return string[strlen(string) - LAST_INDEX_DIFFERENCE] == ',';
-}
-
-/**
  * Checks if the given string is a decimal integer.
  * Allows for + and - signs before the digits.
  * Does not allow for a decimal point.
@@ -171,7 +145,6 @@ boolean isInteger(const char string[]) {
 
 /**
  * Returns the matching set for the given string, taken from the given sets array.
- * Removes the ending comma from the string if it exists.
  * Assumes the string is null-terminated.
  *
  * @param string The string to check.
@@ -181,8 +154,6 @@ boolean isInteger(const char string[]) {
 setptr getMatchingSet(char string[], setptr sets[]) {
     int index; /* The index of the matching set. */
 
-    /* Remove the ending comma if it exists. */
-    removeComma(string);
     /* Get the index of the matching set. */
     index = getSetIndex(string);
 

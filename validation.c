@@ -1,5 +1,6 @@
 #include "validation.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,6 +27,11 @@ boolean isLineValid(const char line[]) {
     /* If the line is empty or if it consists only of whitespace, it should be skipped. */
     if (operation == NULL) {
         /* Skip this line without printing an error message. */
+        return FALSE;
+    }
+
+    if (!validateCommas(line)) {
+        free(lineCopy);
         return FALSE;
     }
 
@@ -106,28 +112,10 @@ boolean validatePrintSet() {
 boolean validateReadSet() {
     char *token;       /* The current token. */
     char *nextToken;   /* The next token. */
-    int numberOperand; /* The number operand, converted to */
-
-    /* Get the (what should be) target set's name. */
-    token = getNextToken();
-
-    /* Check if there is a comma after the (supposed) set's name. */
-    if (!doesEndWithComma(token)) {
-        fprintf(stderr, "Error: Missing comma.\n");
-        return FALSE;
-    }
-
-    /* Remove the comma. */
-    removeComma(token);
-
-    /* Check if there are some commas left after removing one. */
-    if (doesEndWithComma(token)) {
-        fprintf(stderr, "Error: Two or more consecutive commas.\n");
-        return FALSE;
-    }
+    int numberOperand; /* The current number operand, converted to an integer. */
 
     /* Check if the target set's name is valid. */
-    if (getSetIndex(token) == INVALID_INDEX) {
+    if (getSetIndex(getNextToken()) == INVALID_INDEX) {
         fprintf(stderr, "Error: Invalid set name.\n");
         return FALSE;
     }
@@ -145,29 +133,6 @@ boolean validateReadSet() {
 
     /* Loops over all remaining operands. They should all be numbers. */
     while (token != NULL) {
-        /* Check for a comma if the current operand is not the last one. */
-        if (nextToken != NULL && !doesEndWithComma(token)) {
-            fprintf(stderr, "Error: Missing comma.\n");
-            return FALSE;
-        }
-
-        /* Check if there is a comma after the last operand. */
-        if (nextToken == NULL && doesEndWithComma(token)) {
-            fprintf(stderr, "Error: The last operand should not have a comma after it.\n");
-            return FALSE;
-        }
-
-        /* Remove the comma if the current operand is not the last one. */
-        if (nextToken != NULL) {
-            removeComma(token);
-        }
-
-        /* Check if there are some commas left after removing one. */
-        if (doesEndWithComma(token)) {
-            fprintf(stderr, "Error: Two or more consecutive commas.\n");
-            return FALSE;
-        }
-
         /* Check if the operand is an integer. */
         if (!isInteger(token)) {
             fprintf(stderr, "Error: Set members should be integers only.\n");
@@ -204,9 +169,9 @@ boolean validateReadSet() {
  * @return TRUE if the command is valid, FALSE otherwise.
  */
 boolean validateSetOperation() {
-    char *token;              /* The current token. */
-    char *nextToken;          /* The next token. */
-    unsigned operandsChecked; /* The current number of operands checked. */
+    char *token;                   /* The current token. */
+    char *nextToken;               /* The next token. */
+    unsigned char operandsChecked; /* The current number of operands checked. */
 
     /* Start counting from 0. */
     operandsChecked = STARTING_VALUE;
@@ -223,29 +188,6 @@ boolean validateSetOperation() {
             return FALSE;
         }
 
-        /* Check for a comma if the current operand is not the last one. */
-        if (nextToken != NULL && !doesEndWithComma(token)) {
-            fprintf(stderr, "Error: Missing comma.\n");
-            return FALSE;
-        }
-
-        /* Check if there is a comma after the last operand. */
-        if (nextToken == NULL && doesEndWithComma(token)) {
-            fprintf(stderr, "Error: The last operand should not have a comma after it.\n");
-            return FALSE;
-        }
-
-        /* Remove the comma if the current operand is not the last one. */
-        if (nextToken != NULL) {
-            removeComma(token);
-        }
-
-        /* Check if there are some commas left after removing one. */
-        if (doesEndWithComma(token)) {
-            fprintf(stderr, "Error: Two or more consecutive commas.\n");
-            return FALSE;
-        }
-
         /* Check if the operand is a valid set. */
         if (getSetIndex(token) == INVALID_INDEX) {
             fprintf(stderr, "Error: Invalid set name.\n");
@@ -259,5 +201,128 @@ boolean validateSetOperation() {
         operandsChecked++;
     }
 
+    /* Check if there too few operands. */
+    if (operandsChecked < SET_OPERATION_OPERANDS) {
+        fprintf(stderr, "Error: Set operations only accept exactly 3 operands.\n");
+        return FALSE;
+    }
+
     return TRUE;
+}
+
+boolean validateCommas(const char line[]) {
+    char *lineCopy;
+    char *current;
+    boolean commaBefore;
+    boolean spaceSeen;
+    size_t commasFound;
+
+    commaBefore = FALSE;
+    spaceSeen = FALSE;
+    commasFound = STARTING_VALUE;
+
+    lineCopy = current = duplicateString(line);
+    removeWhitespace(lineCopy);
+
+    if (*lineCopy == ',') {
+        fprintf(stderr, "Error: Comma before the operation.\n");
+        return FALSE;
+    }
+
+    while (*current != '\0') {
+        if (*current == ',') {
+            if (!spaceSeen) {
+                fprintf(stderr, "Error: Comma after the operation.\n");
+                free(lineCopy);
+                return FALSE;
+            }
+
+            if (commaBefore) {
+                fprintf(stderr, "Error: Two or more consecutive commas.\n");
+                free(lineCopy);
+                return FALSE;
+            }
+
+            commasFound++;
+            commaBefore = TRUE;
+        } else {
+            if (isspace(*current)) {
+                spaceSeen = TRUE;
+
+                if (*(current + LAST_INDEX_DIFFERENCE) == ',') {
+                    fprintf(stderr, "Error: Comma after the operation.\n");
+                    free(lineCopy);
+                    return FALSE;
+                }
+            } else {
+                commaBefore = FALSE;
+            }
+        }
+
+        current++;
+    }
+
+    free(lineCopy);
+
+    if (commaBefore) {
+        fprintf(stderr, "Error: Comma after the last operand.\n");
+        return FALSE;
+    }
+
+    if (!commasMatchTokens(line)) {
+        fprintf(stderr, "Error: Missing comma.\n");
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+void removeWhitespace(char string[]) {
+    char *current;
+    char *insert;
+    boolean characterSeen;
+    boolean addedSpace;
+
+    characterSeen = FALSE;
+    addedSpace = FALSE;
+
+    for (current = insert = string; *current != '\0'; current++) {
+        if (isspace(*current)) {
+            if (!addedSpace && characterSeen) {
+                *insert++ = *current;
+                addedSpace = TRUE;
+            }
+        } else {
+            *insert++ = *current;
+            characterSeen = TRUE;
+        }
+    }
+
+    *insert = '\0';
+}
+
+boolean commasMatchTokens(const char line[]) {
+    size_t commasFound;
+    size_t tokensFound;
+    boolean inToken;
+
+    inToken = FALSE;
+    commasFound = STARTING_VALUE;
+    tokensFound = STARTING_VALUE;
+
+    while (*line != '\0') {
+        if (isspace(*line)) {
+            inToken = FALSE;
+        } else if (*line == ',') {
+            inToken = FALSE;
+            commasFound++;
+        } else if (!inToken) {
+            inToken = TRUE;
+            tokensFound++;
+        }
+
+        line++;
+    }
+
+    return tokensFound == SINGLE_TOKEN || commasFound == tokensFound - TOKENS_COMMAS_DIFFERENCE;
 }

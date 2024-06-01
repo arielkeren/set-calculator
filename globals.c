@@ -5,4 +5,4 @@ const char *OPERATIONS[] = {"read_set", "print_set", "union_set", "intersect_set
 /* Every possible set name. */
 const char *SETS[] = {"SETA", "SETB", "SETC", "SETD", "SETE", "SETF"};
 /* All whitespace characters. */
-const char WHITESPACE[] = " \t\n";
+const char SEPARATORS[] = ", \t\n";
