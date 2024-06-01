@@ -277,30 +277,6 @@ boolean validateCommas(const char line[]) {
     return TRUE;
 }
 
-void removeWhitespace(char string[]) {
-    char *current;
-    char *insert;
-    boolean characterSeen;
-    boolean addedSpace;
-
-    characterSeen = FALSE;
-    addedSpace = FALSE;
-
-    for (current = insert = string; *current != '\0'; current++) {
-        if (isspace(*current)) {
-            if (!addedSpace && characterSeen) {
-                *insert++ = *current;
-                addedSpace = TRUE;
-            }
-        } else {
-            *insert++ = *current;
-            characterSeen = TRUE;
-        }
-    }
-
-    *insert = '\0';
-}
-
 boolean commasMatchTokens(const char line[]) {
     size_t commasFound;
     size_t tokensFound;
@@ -325,4 +301,28 @@ boolean commasMatchTokens(const char line[]) {
     }
 
     return tokensFound == SINGLE_TOKEN || commasFound == tokensFound - TOKENS_COMMAS_DIFFERENCE;
+}
+
+void removeWhitespace(char string[]) {
+    char *current;
+    char *insert;
+    boolean characterSeen;
+    boolean addedSpace;
+
+    characterSeen = FALSE;
+    addedSpace = FALSE;
+
+    for (current = insert = string; *current != '\0'; current++) {
+        if (isspace(*current)) {
+            if (!addedSpace && characterSeen) {
+                *insert++ = *current;
+                addedSpace = TRUE;
+            }
+        } else {
+            *insert++ = *current;
+            characterSeen = TRUE;
+        }
+    }
+
+    *insert = '\0';
 }

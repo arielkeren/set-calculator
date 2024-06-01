@@ -142,21 +142,3 @@ boolean isInteger(const char string[]) {
     /* Passed every check - an integer. */
     return TRUE;
 }
-
-/**
- * Returns the matching set for the given string, taken from the given sets array.
- * Assumes the string is null-terminated.
- *
- * @param string The string to check.
- * @param sets An array of sets.
- * @return The matching set for the given string or NULL if not found.
- */
-setptr getMatchingSet(char string[], setptr sets[]) {
-    int index; /* The index of the matching set. */
-
-    /* Get the index of the matching set. */
-    index = getSetIndex(string);
-
-    /* Return the matching set or NULL if not found. */
-    return index == INVALID_INDEX ? NULL : sets[index];
-}

@@ -11,7 +11,7 @@ boolean validatePrintSet();
 boolean validateReadSet();
 boolean validateSetOperation();
 boolean validateCommas(const char line[]);
-void removeWhitespace(char string[]);
 boolean commasMatchTokens(const char line[]);
+void removeWhitespace(char string[]);
 
 #endif

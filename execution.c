@@ -62,7 +62,7 @@ void executePrintSet(char line[], setptr sets[]) {
     lineCopy = duplicateString(line);
     tokenizeLine(lineCopy);
     /* Print the set. */
-    print_set(getMatchingSet(getNextToken(), sets));
+    print_set(sets[getSetIndex(getNextToken())]);
 
     /* The copy is no longer used. */
     free(lineCopy);
@@ -86,7 +86,7 @@ void executeReadSet(char line[], setptr sets[]) {
     lineCopy = duplicateString(line);
     tokenizeLine(lineCopy);
     /* Determine which set to fill. */
-    setToFill = getMatchingSet(getNextToken(), sets);
+    setToFill = sets[getSetIndex(getNextToken())];
 
     /* Count the number of operands. */
     while (getNextToken() != NULL) {
@@ -147,7 +147,7 @@ void executeSetOperation(char line[], setptr sets[]) {
 
     /* Loop over the target sets and fill it with the set operands. */
     for (index = FIRST_INDEX; index < SET_OPERATION_OPERANDS; index++) {
-        targetSets[index] = getMatchingSet(getNextToken(), sets);
+        targetSets[index] = sets[getSetIndex(getNextToken())];
     }
 
     /* The copy is no longer used. */
