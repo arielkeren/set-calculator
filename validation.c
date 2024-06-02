@@ -30,6 +30,7 @@ boolean isLineValid(const char line[]) {
         return FALSE;
     }
 
+    /* Validate every comma in the input line. */
     if (!validateCommas(line)) {
         free(lineCopy);
         return FALSE;
@@ -173,7 +174,6 @@ boolean validateSetOperation() {
     char *nextToken;               /* The next token. */
     unsigned char operandsChecked; /* The current number of operands checked. */
 
-    /* Start counting from 0. */
     operandsChecked = STARTING_VALUE;
     /* Get the first operand. */
     token = getNextToken();
@@ -210,65 +210,85 @@ boolean validateSetOperation() {
     return TRUE;
 }
 
+/**
+ * Checks if every comma in the given line is valid.
+ * Assumes the line is null-terminated.
+ *
+ * @param line The line to validate the commas in.
+ * @return TRUE if all of the commas in the line are valid, FALSE otherwise.
+ */
 boolean validateCommas(const char line[]) {
-    char *lineCopy;
-    char *current;
-    boolean commaBefore;
-    boolean spaceSeen;
-    size_t commasFound;
+    char *lineCopy;      /* A copy of the input line. */
+    char *current;       /* The current character. */
+    boolean commaBefore; /* Whether a comma has been seen and there has not been a non-whitespace character after it. */
+    boolean spaceSeen;   /* Whether a whitespace character has been seen. */
 
     commaBefore = FALSE;
     spaceSeen = FALSE;
-    commasFound = STARTING_VALUE;
 
-    lineCopy = current = duplicateString(line);
+    /* Copy the input line. */
+    lineCopy = duplicateString(line);
+    /* Remove all whitespace characters, except for the first one after the first token, from the copy. */
     removeWhitespace(lineCopy);
 
+    /* Check if the first character is a comma. */
     if (*lineCopy == ',') {
         fprintf(stderr, "Error: Comma before the operation.\n");
         return FALSE;
     }
 
-    while (*current != '\0') {
+    /* Loops over all characters in the line. */
+    for (current = lineCopy; *current != '\0'; current++) {
+        /* Check for a comma. */
         if (*current == ',') {
+            /* Check if there is a comma after the operation's name. */
             if (!spaceSeen) {
                 fprintf(stderr, "Error: Comma after the operation.\n");
                 free(lineCopy);
                 return FALSE;
             }
 
+            /* Check if there are two or more consecutive commas. */
             if (commaBefore) {
                 fprintf(stderr, "Error: Two or more consecutive commas.\n");
                 free(lineCopy);
                 return FALSE;
             }
 
-            commasFound++;
+            /* Mark that a comma has been seen. */
             commaBefore = TRUE;
-        } else {
-            if (isspace(*current)) {
-                spaceSeen = TRUE;
-
-                if (*(current + LAST_INDEX_DIFFERENCE) == ',') {
-                    fprintf(stderr, "Error: Comma after the operation.\n");
-                    free(lineCopy);
-                    return FALSE;
-                }
-            } else {
-                commaBefore = FALSE;
-            }
+            continue;
         }
 
-        current++;
+        /* Check for a whitespace character. */
+        if (isspace(*current)) {
+            /* Mark that a whitespace character has been seen. */
+            spaceSeen = TRUE;
+
+            /* Check if there is a comma after the space, that is after operation's name. */
+            if (*(current + LAST_INDEX_DIFFERENCE) == ',') {
+                fprintf(stderr, "Error: Comma after the operation.\n");
+                free(lineCopy);
+                return FALSE;
+            }
+
+            continue;
+        }
+
+        /* A non-whitespace character has been seen. */
+        commaBefore = FALSE;
     }
 
+    /* The line copy is no longer used. */
     free(lineCopy);
 
+    /* Check if the last character is a comma. */
     if (commaBefore) {
         fprintf(stderr, "Error: Comma after the last operand.\n");
         return FALSE;
     }
 
+    /* Check if there have been enough commas for the number of tokens. */
     if (!commasMatchTokens(line)) {
         fprintf(stderr, "Error: Missing comma.\n");
         return FALSE;
@@ -277,52 +297,78 @@ boolean validateCommas(const char line[]) {
     return TRUE;
 }
 
+/**
+ * Checks if the number of commas in the given line fits the number of tokens in it.
+ *
+ * @param line The line to check.
+ * @return TRUE if the number of commas fits the number of tokens, FALSE otherwise.
+ */
 boolean commasMatchTokens(const char line[]) {
-    size_t commasFound;
-    size_t tokensFound;
-    boolean inToken;
+    size_t commasFound; /* The number of commas found. */
+    size_t tokensFound; /* The number of tokens (words separated by whitespace characters and commas) found. */
+    boolean inToken;    /* Whether we are currently in a token. */
 
     inToken = FALSE;
     commasFound = STARTING_VALUE;
     tokensFound = STARTING_VALUE;
 
+    /* Loop over all characters in the line. */
     while (*line != '\0') {
         if (isspace(*line)) {
+            /* We are not in a token anymore. */
             inToken = FALSE;
         } else if (*line == ',') {
+            /* We are not in a token anymore and a comma has been found. */
             inToken = FALSE;
             commasFound++;
         } else if (!inToken) {
+            /* We are currently in a token. Count it. */
             inToken = TRUE;
             tokensFound++;
         }
 
+        /* Move to the next character. */
         line++;
     }
 
-    return tokensFound == SINGLE_TOKEN || commasFound == tokensFound - TOKENS_COMMAS_DIFFERENCE;
+    /* Generally, there should be two more tokens than commas, unless we are talking about a command consisting of a single token. */
+    return tokensFound == SINGLE_TOKEN || commasFound + TOKENS_COMMAS_DIFFERENCE == tokensFound;
 }
 
+/**
+ * Remove almost all whitespace characters from the given string.
+ * Does not remove the first whitespace character after the first token.
+ *
+ * @param string The string to remove whitespace from.
+ */
 void removeWhitespace(char string[]) {
-    char *current;
-    char *insert;
-    boolean characterSeen;
-    boolean addedSpace;
+    char *current;         /* The current character. */
+    char *insert;          /* The position to insert into. */
+    boolean characterSeen; /* Whether a non-whitespace character has been seen. */
+    boolean addedSpace;    /* Whether a whitespace character has already been added to the string. */
 
     characterSeen = FALSE;
     addedSpace = FALSE;
 
+    /* Loop over all characters in the string. */
     for (current = insert = string; *current != '\0'; current++) {
+        /* Determine whether the current character is a whitespace character. */
         if (isspace(*current)) {
+            /* Add a single whitespace character if a non-whitespace character has been seen. */
             if (!addedSpace && characterSeen) {
+                /* Insert the whitespace character. */
                 *insert++ = *current;
+                /* Mark that a whitespace character has been added. */
                 addedSpace = TRUE;
             }
         } else {
+            /* Insert the non-whitespace character. */
             *insert++ = *current;
+            /* Mark that a non-whitespace character has been seen. */
             characterSeen = TRUE;
         }
     }
 
+    /* Insert the terminating null character. */
     *insert = '\0';
 }
