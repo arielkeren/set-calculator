@@ -75,7 +75,19 @@ void printExplanation() {
     printf("<number> is an integer in the range 0-127.\n\n");
 }
 
+/**
+ * Initializes the array containing all the sets.
+ *
+ * @param sets An array of sets to populate.
+ * @param setA The first set.
+ * @param setB The second set.
+ * @param setC The third set.
+ * @param setD The fourth set.
+ * @param setE The fifth set.
+ * @param setF The sixth set.
+ */
 void initializeSets(setptr sets[], set setA, set setB, set setC, set setD, set setE, set setF) {
+    /* Populate each position in the array with the right set. */
     sets[FIRST_INDEX] = setA;
     sets[SECOND_INDEX] = setB;
     sets[THIRD_INDEX] = setC;
