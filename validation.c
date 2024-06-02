@@ -336,10 +336,10 @@ boolean commasMatchTokens(const char line[]) {
 }
 
 /**
- * Remove almost all whitespace characters from the given string.
+ * Removes almost all whitespace characters from the given string.
  * Does not remove the first whitespace character after the first token.
  *
- * @param string The string to remove whitespace from.
+ * @param string The string to remove whitespace characters from.
  */
 void removeWhitespace(char string[]) {
     char *current;         /* The current character. */
