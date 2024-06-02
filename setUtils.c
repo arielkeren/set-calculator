@@ -40,7 +40,6 @@ void printSetAsString(const set setA) {
     unsigned char currentNumber; /* Current number of positions checked in the set. */
     unsigned char numbersFound;  /* Current number of numbers found in the set. */
 
-    /* Start counting from 0. */
     numbersFound = STARTING_VALUE;
     currentNumber = STARTING_VALUE;
 
