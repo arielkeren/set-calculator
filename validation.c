@@ -266,7 +266,7 @@ boolean validateCommas(const char line[]) {
             spaceSeen = TRUE;
 
             /* Check if there is a comma after the space, that is after operation's name. */
-            if (*(current + LAST_INDEX_DIFFERENCE) == ',') {
+            if (*(current + NEXT_INDEX_DIFFERENCE) == ',') {
                 fprintf(stderr, "Error: Comma after the operation.\n");
                 free(lineCopy);
                 return FALSE;
