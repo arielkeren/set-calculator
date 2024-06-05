@@ -135,6 +135,7 @@ char *readLine() {
     /* Exit the program if the end of file is reached. */
     checkEndOfFile();
     index = FIRST_INDEX;
+    line = NULL;
 
     /* Loop over the characters until the end of the line or the file. */
     while ((character = getchar()) != '\n' && character != EOF) {
