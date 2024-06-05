@@ -26,7 +26,7 @@ void readInput(setptr sets[]) {
 
     /* Loop until the program is stopped. */
     while (!isStopped) {
-        printf("Please enter a command:\n");
+        printf("\nPlease enter a command:\n");
 
         /* Read the command from the user. */
         line = readLine();
@@ -34,7 +34,7 @@ void readInput(setptr sets[]) {
         /* Print the line that was entered. */
         printf("Your input: %s\n", line);
 
-        /* Skip to the next input if the line is invalid. */
+        /* Skip to the next input line if the current line is invalid. */
         if (!isLineValid(line)) {
             continue;
         }
@@ -45,8 +45,10 @@ void readInput(setptr sets[]) {
             isStopped = TRUE;
         }
 
-        /* The input is no longer used. */
+        /* The input line is no longer used. */
         free(line);
+
+        printf("Command executed successfully!\n");
     }
 
     printf("Goodbye!\n");
