@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "mysetUtils.h"
+#include "set.h"
 
 /**
  * Initializes the 6 sets to be used in the program.

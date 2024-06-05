@@ -3,6 +3,13 @@
 
 #include "globals.h"
 
+/* Each set section represents 8 numbers in the set. */
+typedef unsigned char setsection;
+/* A set is an array of 16 (128 numbers / 8 in each section) set sections. */
+typedef setsection set[SET_SIZE];
+/* Used as a pointer to a set when a set cannot be passed. */
+typedef setsection *setptr;
+
 /**
  * Reads the given numbers to the set (excluding the terminator).
  * Assumes the numbers array is terminated by -1.

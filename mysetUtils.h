@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "globals.h"
+#include "set.h"
 
 /**
  * Runs the program.

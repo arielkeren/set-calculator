@@ -2,6 +2,8 @@
   "files.associations": {
     "string": "c",
     "stdio.h": "c",
-    "validation.h": "c"
+    "validation.h": "c",
+    "set.h": "c",
+    "globals.h": "c"
   }
 }

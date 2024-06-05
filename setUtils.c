@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "globals.h"
+#include "set.h"
 
 /**
  * Checks if the given set is empty.

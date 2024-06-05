@@ -1,7 +1,7 @@
-#ifndef SETUTILS_H
-#define SETUTILS_H
+#ifndef SET_UTILS_H
+#define SET_UTILS_H
 
-#include "globals.h"
+#include "set.h"
 
 /**
  * Checks if the given set is empty.

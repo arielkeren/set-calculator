@@ -49,12 +49,6 @@ extern const char *OPERATIONS[]; /* All possible operation names (e.g. "print_se
 extern const char *SETS[];       /* All possible set names (e.g. "SETA"). */
 extern const char SEPARATORS[];  /* All the characters which should be ignored in the input line. */
 
-/* Each set section represents 8 numbers in the set. */
-typedef unsigned char setsection;
-/* A set is an array of 16 (128 numbers / 8 in each section) set sections. */
-typedef setsection set[SET_SIZE];
-/* Used as a pointer to a set when a set cannot be passed. */
-typedef setsection *setptr;
 /* The type to loop over all sections in a set with. */
 typedef unsigned char setindex;
 /* The type consisting of all possible values of read_set's number operands. */

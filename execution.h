@@ -1,7 +1,7 @@
 #ifndef EXECUTION_H
 #define EXECUTION_H
 
-#include "globals.h"
+#include "set.h"
 
 /**
  * Executes the input line, based on the operation and the operands.

@@ -6,6 +6,7 @@
 
 #include "execution.h"
 #include "globals.h"
+#include "set.h"
 #include "validation.h"
 
 /**
