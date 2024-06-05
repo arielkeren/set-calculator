@@ -7,6 +7,7 @@
 #include "execution.h"
 #include "globals.h"
 #include "set.h"
+#include "utils.h"
 #include "validation.h"
 
 /**
@@ -126,48 +127,45 @@ void resetSets(setptr sets[]) {
  * @return The line as input from the user.
  */
 char *readLine() {
-    char *line;  /* Input line from the user. */
-    size_t size; /* Size of the input line. */
+    int character;  /* Current character of the input line. */
+    char *line;     /* Input line from the user. */
+    char *lastLine; /* The last input line. */
+    size_t index;   /* Size of the input line. */
 
     /* Exit the program if the end of file is reached. */
     checkEndOfFile();
+    index = FIRST_INDEX;
 
-    /* Allocate initial memory for the input line. */
-    size = STARTING_LINE_LENGTH;
-    line = malloc(size * sizeof(char));
+    /* Loop over the characters until the end of the line or the file. */
+    while ((character = getchar()) != '\n' && character != EOF) {
+        /* Allocate more memory if necessary. */
+        if (index % INITIAL_SIZE == NO_REMAINDER) {
+            /* Keep the pointer to the last line. */
+            lastLine = line;
+            /* Allocate more memory for the new line. */
+            line = malloc((index + INITIAL_SIZE) * sizeof(char));
 
-    /* Check for an error in the memory allocation. */
-    if (line == NULL) {
-        /* Exit the program. */
-        fprintf(stderr, "Failed to allocate memory for the input.\n");
-        exit(ERROR);
-    }
+            /* Check for an error in the memory allocation. */
+            if (line == NULL) {
+                /* Exit the program. */
+                fprintf(stderr, "Failed to allocate memory for the input.\n");
+                exit(ERROR);
+            }
 
-    /* Read the initial bit of the input line. */
-    fgets(line, size, stdin);
-    /* Exit the program if an error has occured. */
-    checkFileError();
-
-    /* Keep reading more of the input line until a newline character is present. */
-    while (strchr(line, '\n') == NULL) {
-        /* Increase the size of the input line. */
-        size *= LINE_EXPANSION_FACTOR;
-        /* Allocate more memory for the input line. */
-        line = realloc(line, size * sizeof(char));
-
-        /* Check for an error in the memory allocation. */
-        if (line == NULL) {
-            /* Exit the program. */
-            fprintf(stderr, "Failed to allocate memory for the input.\n");
-            exit(ERROR);
+            /* Copy the last line to the new line (if it is not the first time). */
+            if (lastLine != NULL) {
+                strcpy(line, lastLine);
+                /* The last line is no longer used. */
+                free(lastLine);
+            }
         }
 
-        /* Read the next bit of the input line. */
-        fgets(line, size, stdin);
-        /* Exit the program if an error has occured. */
-        checkFileError();
+        /* Insert the current character and increment the index. */
+        line[index++] = character;
     }
 
+    /* Insert the terminating null character. */
+    line[index] = '\0';
     /* Return the whole input line as it has been read. */
     return line;
 }
@@ -180,18 +178,6 @@ void checkEndOfFile() {
     if (feof(stdin)) {
         /* Exit the program. */
         fprintf(stderr, "Error: Missing stop command.\n");
-        exit(ERROR);
-    }
-}
-
-/**
- * Exits the program if an error occurs in the standard input.
- */
-void checkFileError() {
-    /* Check for an error in the standard input. */
-    if (ferror(stdin)) {
-        /* Exit the program. */
-        fprintf(stderr, "Failed to read the input.\n");
         exit(ERROR);
     }
 }

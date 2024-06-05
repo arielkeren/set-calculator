@@ -11,8 +11,7 @@
 #define LARGEST_MEMBER 127 /* The largest potential member in the set. */
 
 /* Input line reading information. */
-#define STARTING_LINE_LENGTH 256 /* The length of the starting string to read the input line into. */
-#define LINE_EXPANSION_FACTOR 2  /* The factor by which to increase the size of the input line each time it is does not fit. */
+#define INITIAL_SIZE 256 /* The size of the starting string to read the input line into. */
 
 /* Tokens and commas information. */
 #define SINGLE_TOKEN 1             /* A single token in an input line (the number of commas should be 0). */

@@ -4,6 +4,9 @@
     "stdio.h": "c",
     "validation.h": "c",
     "set.h": "c",
-    "globals.h": "c"
+    "globals.h": "c",
+    "array": "c",
+    "initializer_list": "c",
+    "utility": "c"
   }
 }
