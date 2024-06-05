@@ -27,6 +27,7 @@ boolean isLineValid(const char line[]) {
     /* If the line is empty or if it consists only of whitespace, it should be skipped. */
     if (operation == NULL) {
         /* Skip this line without printing an error message. */
+        free(lineCopy);
         return FALSE;
     }
 
@@ -233,6 +234,7 @@ boolean validateCommas(const char line[]) {
 
     /* Check if the first character is a comma. */
     if (*lineCopy == ',') {
+        free(lineCopy);
         fprintf(stderr, "Error: Comma before the operation.\n");
         return FALSE;
     }
@@ -243,15 +245,15 @@ boolean validateCommas(const char line[]) {
         if (*current == ',') {
             /* Check if there is a comma after the operation's name. */
             if (!spaceSeen) {
-                fprintf(stderr, "Error: Comma after the operation.\n");
                 free(lineCopy);
+                fprintf(stderr, "Error: Comma after the operation.\n");
                 return FALSE;
             }
 
             /* Check if there are two or more consecutive commas. */
             if (commaBefore) {
-                fprintf(stderr, "Error: Two or more consecutive commas.\n");
                 free(lineCopy);
+                fprintf(stderr, "Error: Two or more consecutive commas.\n");
                 return FALSE;
             }
 
@@ -267,8 +269,8 @@ boolean validateCommas(const char line[]) {
 
             /* Check if there is a comma after the space, that is after operation's name. */
             if (*(current + NEXT_INDEX_DIFFERENCE) == ',') {
-                fprintf(stderr, "Error: Comma after the operation.\n");
                 free(lineCopy);
+                fprintf(stderr, "Error: Comma after the operation.\n");
                 return FALSE;
             }
 
