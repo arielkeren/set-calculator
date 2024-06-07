@@ -24,7 +24,7 @@ boolean isLineValid(const char line[]) {
     /* Tokenize the line and get the first token (the operation). */
     operation = tokenizeLine(lineCopy);
 
-    /* If the line is empty or if it consists only of whitespace, it should be skipped. */
+    /* If the line only consists of whitespace characters, it should be skipped. */
     if (operation == NULL) {
         /* Skip this line without printing an error message. */
         free(lineCopy);
@@ -90,15 +90,26 @@ boolean validateStop() {
  * @return TRUE if the command is valid, FALSE otherwise.
  */
 boolean validatePrintSet() {
+    char *token; /* Current token. */
+
+    /* Get what should be the target set's name. */
+    token = getNextToken();
+
+    /* Check if an operand has been provided. */
+    if (token == NULL) {
+        fprintf(stderr, "Error: No set to print.\n");
+        return FALSE;
+    }
+
     /* Check if there is an operand, which represents valid set. */
-    if (getSetIndex(getNextToken()) == INVALID_INDEX) {
+    if (getSetIndex(token) == INVALID_INDEX) {
         fprintf(stderr, "Error: Invalid set name.\n");
         return FALSE;
     }
 
     /* Check if there any extra operands, which should not be there. */
     if (getNextToken() != NULL) {
-        fprintf(stderr, "Error: print_set only accepts a single operand.\n");
+        fprintf(stderr, "Error: print_set only accepts a single set operand.\n");
         return FALSE;
     }
 
@@ -116,8 +127,17 @@ boolean validateReadSet() {
     char *nextToken;   /* The next token. */
     int numberOperand; /* The current number operand, converted to an integer. */
 
+    /* Get what should be the target set's name. */
+    token = getNextToken();
+
+    /* Check if an operand has been provided. */
+    if (token == NULL) {
+        fprintf(stderr, "Error: No set to fill.\n");
+        return FALSE;
+    }
+
     /* Check if the target set's name is valid. */
-    if (getSetIndex(getNextToken()) == INVALID_INDEX) {
+    if (getSetIndex(token) == INVALID_INDEX) {
         fprintf(stderr, "Error: Invalid set name.\n");
         return FALSE;
     }
@@ -128,6 +148,7 @@ boolean validateReadSet() {
     /* Check if there are any operands after the set's name. */
     if (token == NULL) {
         fprintf(stderr, "Error: A read_set command should include some numbers as operands.\n");
+        return FALSE;
     }
 
     /* Get the operand after it to always know if the current operand is the last one (to check for a comma). */
@@ -185,7 +206,7 @@ boolean validateSetOperation() {
     while (token != NULL) {
         /* Check if there are too many operands (more than the three sets needed). */
         if (operandsChecked == SET_OPERATION_OPERANDS) {
-            fprintf(stderr, "Error: Set operations only accept exactly 3 operands.\n");
+            fprintf(stderr, "Error: Set operations only accept exactly 3 set operands.\n");
             return FALSE;
         }
 

@@ -87,6 +87,7 @@ void executeReadSet(char line[], setptr sets[]) {
     tokenizeLine(lineCopy);
     /* Determine which set to fill. */
     setToFill = sets[getSetIndex(getNextToken())];
+    length = STARTING_VALUE;
 
     /* Count the number of operands. */
     while (getNextToken() != NULL) {

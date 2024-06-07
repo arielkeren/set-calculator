@@ -32,11 +32,17 @@ void readInput(setptr sets[]) {
         /* Read the command from the user. */
         line = readLine();
 
+        /* Skip blank lines. */
+        if (line == NULL) {
+            continue;
+        }
+
         /* Print the line that was entered. */
         printf("Your input: %s\n", line);
 
         /* Skip to the next input line if the current line is invalid. */
         if (!isLineValid(line)) {
+            free(line);
             continue;
         }
 
@@ -133,12 +139,16 @@ char *readLine() {
     size_t index;   /* Size of the input line. */
 
     /* Exit the program if the end of file is reached. */
-    checkEndOfFile();
+    if ((character = getchar()) == EOF) {
+        fprintf(stderr, "Error: Missing stop command.\n");
+        exit(ERROR);
+    }
+
     index = FIRST_INDEX;
     line = NULL;
 
     /* Loop over the characters until the end of the line or the file. */
-    while ((character = getchar()) != '\n' && character != EOF) {
+    while (character != '\n' && character != EOF) {
         /* Allocate more memory if necessary. */
         if (index % INITIAL_SIZE == NO_REMAINDER) {
             /* Keep the pointer to the last line. */
@@ -163,22 +173,15 @@ char *readLine() {
 
         /* Insert the current character and increment the index. */
         line[index++] = character;
+        character = getchar();
     }
 
-    /* Insert the terminating null character. */
-    line[index] = '\0';
+    /* Check if memory has been actually allocated. */
+    if (index != FIRST_INDEX) {
+        /* Insert the terminating null character. */
+        line[index] = '\0';
+    }
+
     /* Return the whole input line as it has been read. */
     return line;
-}
-
-/**
- * Exits the program if end of file is reached in the standard input.
- */
-void checkEndOfFile() {
-    /* Check for end of file in the standard input. */
-    if (feof(stdin)) {
-        /* Exit the program. */
-        fprintf(stderr, "Error: Missing stop command.\n");
-        exit(ERROR);
-    }
 }

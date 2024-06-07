@@ -70,6 +70,10 @@ int getSetIndex(const char string[]) {
 int indexOf(const char *words[], const char word[], int length) {
     int index; /* Current index in the words array. */
 
+    if (word == NULL) {
+        return INVALID_INDEX;
+    }
+
     /* Loop over each word in the words array. */
     for (index = FIRST_INDEX; index < length; index++) {
         /* Check if the current word matches the given word. */
