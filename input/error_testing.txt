@@ -1,0 +1,21 @@
+Print_Set SETA
+abab s, 1, 2
+,  print_set SETB
+print_set , SETC
+read_set SETD, 1, 2, -1,
+union_set SETA SETB, SETC
+read_set SETE, 127
+read_set SETF, 128
+read_set SETA, -77, -1
+union_set SETA,, SETB, SETC
+intersect_set seta, setb, setc
+read_set SETA, SETB, SETC
+print_set
+print_set SETA, SETB
+read_set
+read_set SETF
+sub_set SETA, SETB
+symdiff_set SETA, SETB, SETC, SETD
+stop 1
+
+stop

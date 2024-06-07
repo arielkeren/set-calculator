@@ -1,0 +1,21 @@
+union_set SETA, SETB, SETC
+print_set SETC
+
+read_set        SETA, 10  ,  30  ,  20,-1
+union_set SETA, SETA, SETB
+  union_set SETA, SETB, SETC
+union_set SETB, SETC, SETD
+   union_set SETC, SETD, SETE
+union_set SETD, SETE, SETF
+           
+         	
+	print_set SETA
+print_set SETB
+	print_set SETC
+print_set SETD
+           print_set SETE
+print_set SETF
+
+stop
+  
+	

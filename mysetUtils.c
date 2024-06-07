@@ -142,6 +142,7 @@ char *readLine() {
     /* Exit the program if the end of file is reached. */
     if ((character = getchar()) == EOF) {
         fprintf(stderr, "Error: Missing stop command.\n");
+        printf("Exiting the program...\n");
         exit(ERROR);
     }
 
