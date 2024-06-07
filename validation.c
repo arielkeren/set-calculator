@@ -26,6 +26,7 @@ boolean isLineValid(const char line[]) {
 
     /* If the line only consists of whitespace characters, it should be skipped. */
     if (operation == NULL) {
+        printf("Skipping empty line...\n");
         /* Skip this line without printing an error message. */
         free(lineCopy);
         return FALSE;

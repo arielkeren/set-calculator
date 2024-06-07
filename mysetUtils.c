@@ -34,6 +34,7 @@ void readInput(setptr sets[]) {
 
         /* Skip blank lines. */
         if (line == NULL) {
+            printf("Skipping empty line...\n");
             continue;
         }
 
