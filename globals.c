@@ -1,3 +1,13 @@
+/*
+ * globals.c
+ * Includes some global constants for the program.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "globals.h"
 
 /* Every possible operation name. */

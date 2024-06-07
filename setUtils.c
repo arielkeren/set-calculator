@@ -1,3 +1,13 @@
+/*
+ * setUtils.c
+ * Includes functions to be used in set.c, mainly for printing sets.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "setUtils.h"
 
 #include <stdio.h>

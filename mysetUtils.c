@@ -1,3 +1,15 @@
+/*
+ * mysetUtils.c
+ * Includes functions for getting everything ready.
+ * Also, includes functions for getting input from the user.
+ * Finally, Includes the function which contains the main loop of the program.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "mysetUtils.h"
 
 #include <stdio.h>

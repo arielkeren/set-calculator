@@ -1,3 +1,14 @@
+/*
+ * set.c
+ * Includes one function for each of the possible commands in the program.
+ * Every function assumes the inputs are valid.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "set.h"
 
 #include <stdio.h>

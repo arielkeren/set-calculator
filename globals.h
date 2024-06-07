@@ -1,3 +1,13 @@
+/*
+ * globals.h
+ * Includes some global constants, types and enums for the program.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #ifndef GLOBALS_H
 #define GLOBALS_H
 

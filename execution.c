@@ -1,3 +1,14 @@
+/*
+ * execution.c
+ * Includes functions to execute every possible command in the program.
+ * All functions in this file assume that the input command is valid.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "execution.h"
 
 #include <stdio.h>

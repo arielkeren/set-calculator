@@ -1,3 +1,13 @@
+/*
+ * mysetUtils.h
+ * Includes the prototypes of all the functions in mysetUtils.c.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #ifndef MYSET_UTILS_H
 #define MYSET_UTILS_H
 
@@ -50,15 +60,5 @@ void resetSets(setptr sets[]);
  * @return The line as input from the user.
  */
 char *readLine();
-
-/**
- * Exits the program if end of file is reached in the standard input.
- */
-void checkEndOfFile();
-
-/**
- * Exits the program if an error occurs in the standard input.
- */
-void checkFileError();
 
 #endif

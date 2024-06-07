@@ -1,3 +1,13 @@
+/*
+ * execution.h
+ * Includes the prototypes of all the functions in execution.c.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #ifndef EXECUTION_H
 #define EXECUTION_H
 

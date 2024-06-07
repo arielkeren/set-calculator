@@ -1,3 +1,14 @@
+/*
+ * set.h
+ * Includes the prototypes of all the functions in set.c.
+ * Also, includes some types for handling sets in the program.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #ifndef SET_H
 #define SET_H
 

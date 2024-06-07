@@ -1,3 +1,13 @@
+/*
+ * setUtils.h
+ * Includes the prototypes of all the functions in setUtils.c.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #ifndef SET_UTILS_H
 #define SET_UTILS_H
 

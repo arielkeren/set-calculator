@@ -1,3 +1,19 @@
+/*
+ * utils.c
+ * Includes some general functions for the program.
+ * Some of the functionality:
+ * - Getting the next token from a tokenized line.
+ * - Tokenization of lines.
+ * - Getting the associated index of a set or an operation.
+ * - Duplication of strings.
+ * - Checking if a string can be interpreted as a decimal integer.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "utils.h"
 
 #include <ctype.h>

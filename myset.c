@@ -1,3 +1,13 @@
+/*
+ * myset.c
+ * Includes the main function, which runs the program.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "globals.h"
 #include "mysetUtils.h"
 #include "set.h"

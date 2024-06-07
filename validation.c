@@ -1,3 +1,15 @@
+/*
+ * validation.c
+ * Includes a function for validating an input line (if it is a valid command).
+ * Also, includes separated validation functions for each operation.
+ * Finally, includes some functions to validate the commas in the user's commands.
+ *
+ * Name: Ariel Keren
+ * Course: C Lab, 20465
+ * Semester: 2024B
+ * Date: 07/06/2024
+ */
+
 #include "validation.h"
 
 #include <ctype.h>
