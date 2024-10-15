@@ -1,6 +1,6 @@
 # Set Calculator
 
-A calculator, written in C, for performing set operations.
+A calculator for performing set operations.
 
 ## Background
 This set calculator was one of the assignments for a course in C in The Open University of Israel.
