@@ -11,10 +11,10 @@ This set calculator was one of the assignments for a course in C in The Open Uni
 ### Overview
 
 There are 6 sets to work with: SETA, SETB, SETC, SETD, SETE, SETF.<br>
-Sets can be passed as operands, separated by commas, to the different instructions of the calculator.<br>
+Sets can be passed as operands, separated by commas, to the different commands of the calculator.<br>
 Each set contains integers in the range 0-127 (including 0 and 127) in a very efficient way, allowing for fast operations and low memory usage.
 
-### List of Instructions
+### List of Commands
 
 - `read_set <set> <value> <value> ... -1`<br>
   Reads values into the given set.<br>
